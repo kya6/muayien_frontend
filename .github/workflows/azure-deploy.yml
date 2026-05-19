@@ -1,0 +1,78 @@
+name: Build and deploy to Azure
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: muayien-frontend
+  # Set these as repo secrets, then uncomment the right job below.
+  # ACR_NAME: your-registry             # e.g. muayienacr (without .azurecr.io)
+  # AZURE_WEBAPP_NAME: muayien-frontend  # App Service name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  # ---------------------------------------------------------------
+  # OPTION A — Azure Static Web Apps (recommended for SPA frontend)
+  # ---------------------------------------------------------------
+  # deploy-swa:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/download-artifact@v4
+  #       with: { name: dist, path: dist }
+  #     - name: Deploy to Azure Static Web Apps
+  #       uses: Azure/static-web-apps-deploy@v1
+  #       with:
+  #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+  #         repo_token: ${{ secrets.GITHUB_TOKEN }}
+  #         action: upload
+  #         app_location: ""
+  #         output_location: "dist"
+  #         skip_app_build: true
+
+  # ---------------------------------------------------------------
+  # OPTION B — Container to Azure App Service (Web App for Containers)
+  # ---------------------------------------------------------------
+  # deploy-container:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: azure/login@v2
+  #       with:
+  #         creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #     - name: Build & push image to ACR
+  #       run: |
+  #         az acr login --name ${{ env.ACR_NAME }}
+  #         docker build \
+  #           --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
+  #           -t ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+  #         docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+  #     - name: Deploy to App Service
+  #       uses: azure/webapps-deploy@v3
+  #       with:
+  #         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+  #         images: ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}

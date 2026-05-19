@@ -1,0 +1,7 @@
+This is a test file written via bash heredoc.
+Line 2 with some content.
+Line 3 — should make this longer than 200 bytes to test if bash writes get truncated too.
+Line 4 padding padding padding padding padding padding padding padding padding.
+Line 5 padding padding padding padding padding padding padding padding padding.
+Line 6 padding padding padding padding padding padding padding padding padding.
+Line 7 END OF FILE MARKER.
