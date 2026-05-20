@@ -33,7 +33,7 @@ export default function Register() {
           .join(' . ')
         setError(msg || 'Registration failed.')
       } else {
-        setError('Registration failed. The backend may not yet expose /api/register/.')
+        setError('Registration failed. The backend may not yet expose')
       }
     } finally {
       setLoading(false)

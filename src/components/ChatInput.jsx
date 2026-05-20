@@ -32,7 +32,7 @@ export default function ChatInput({ value, onChange, onSend, disabled }) {
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={onKeyDown}
           rows={1}
-          placeholder='Ask Muayien... e.g. "I want to take Monday off"'
+          placeholder='Ask Muayien...'
           className="flex-1 resize-none bg-transparent px-1 py-1.5 text-sm leading-6 text-white placeholder:text-brand-secondary3/40 focus:outline-none"
           disabled={disabled}
         />

@@ -39,7 +39,7 @@ export default function Landing() {
             <div>
               <div className="pill mb-5">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
-                Unified HR and IT assistant
+                HRMS and ITSM assistant
               </div>
               <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
                 One conversation.<br />
@@ -47,7 +47,7 @@ export default function Landing() {
               </h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-brand-secondary3/80 sm:text-lg">
                 Muayien replaces the maze of HRMS and ITSM dashboards with a single,
-                intelligent chat. Request leave, open a ticket, check status, in plain English.
+                intelligent chat.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/register" className="btn-primary px-5 py-2.5 text-base">Get started</Link>
@@ -62,7 +62,7 @@ export default function Landing() {
                   <div className="h-2.5 w-2.5 rounded-full bg-brand-secondary" />
                   <div className="h-2.5 w-2.5 rounded-full bg-brand-secondary" />
                   <div className="h-2.5 w-2.5 rounded-full bg-brand-secondary" />
-                  <span className="ml-2 text-xs text-brand-secondary3/60">muayien.app/chat</span>
+                  <span className="ml-2 text-xs text-brand-secondary3/60">muayien.moxs.space/chat</span>
                 </div>
                 <div className="space-y-3 px-4 py-5">
                   <div className="flex justify-end">
